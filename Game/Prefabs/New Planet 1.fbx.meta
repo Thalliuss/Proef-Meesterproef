@@ -1,0 +1,184 @@
+fileFormatVersion: 2
+guid: ca8a1b67d0e9a0141a5c94439742cf30
+timeCreated: 1505219655
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Planet_Chunk_0_0
+    100004: Planet_Chunk_0_1
+    100006: Planet_Chunk_1_0
+    100008: Planet_Chunk_1_1
+    100010: Planet_Chunk_2_0
+    100012: Planet_Chunk_2_1
+    100014: Planet_Chunk_3_0
+    100016: Planet_Chunk_3_1
+    100018: Planet_Chunk_4_0
+    100020: Planet_Chunk_4_1
+    100022: Planet_Chunk_5_0
+    100024: Planet_Chunk_5_1
+    100026: Planet_Chunk_6_0
+    100028: Planet_Chunk_6_1
+    100030: Planet_Chunk_7_0
+    100032: Planet_Chunk_7_1
+    100034: Planet_Chunk_8_0
+    100036: Planet_Chunk_8_1
+    100038: Planet_Chunk_9_0
+    100040: Planet_Chunk_9_1
+    400000: //RootNode
+    400002: Planet_Chunk_0_0
+    400004: Planet_Chunk_0_1
+    400006: Planet_Chunk_1_0
+    400008: Planet_Chunk_1_1
+    400010: Planet_Chunk_2_0
+    400012: Planet_Chunk_2_1
+    400014: Planet_Chunk_3_0
+    400016: Planet_Chunk_3_1
+    400018: Planet_Chunk_4_0
+    400020: Planet_Chunk_4_1
+    400022: Planet_Chunk_5_0
+    400024: Planet_Chunk_5_1
+    400026: Planet_Chunk_6_0
+    400028: Planet_Chunk_6_1
+    400030: Planet_Chunk_7_0
+    400032: Planet_Chunk_7_1
+    400034: Planet_Chunk_8_0
+    400036: Planet_Chunk_8_1
+    400038: Planet_Chunk_9_0
+    400040: Planet_Chunk_9_1
+    2300000: Planet_Chunk_0_0
+    2300002: Planet_Chunk_0_1
+    2300004: Planet_Chunk_1_0
+    2300006: Planet_Chunk_1_1
+    2300008: Planet_Chunk_2_0
+    2300010: Planet_Chunk_2_1
+    2300012: Planet_Chunk_3_0
+    2300014: Planet_Chunk_3_1
+    2300016: Planet_Chunk_4_0
+    2300018: Planet_Chunk_4_1
+    2300020: Planet_Chunk_5_0
+    2300022: Planet_Chunk_5_1
+    2300024: Planet_Chunk_6_0
+    2300026: Planet_Chunk_6_1
+    2300028: Planet_Chunk_7_0
+    2300030: Planet_Chunk_7_1
+    2300032: Planet_Chunk_8_0
+    2300034: Planet_Chunk_8_1
+    2300036: Planet_Chunk_9_0
+    2300038: Planet_Chunk_9_1
+    3300000: Planet_Chunk_0_0
+    3300002: Planet_Chunk_0_1
+    3300004: Planet_Chunk_1_0
+    3300006: Planet_Chunk_1_1
+    3300008: Planet_Chunk_2_0
+    3300010: Planet_Chunk_2_1
+    3300012: Planet_Chunk_3_0
+    3300014: Planet_Chunk_3_1
+    3300016: Planet_Chunk_4_0
+    3300018: Planet_Chunk_4_1
+    3300020: Planet_Chunk_5_0
+    3300022: Planet_Chunk_5_1
+    3300024: Planet_Chunk_6_0
+    3300026: Planet_Chunk_6_1
+    3300028: Planet_Chunk_7_0
+    3300030: Planet_Chunk_7_1
+    3300032: Planet_Chunk_8_0
+    3300034: Planet_Chunk_8_1
+    3300036: Planet_Chunk_9_0
+    3300038: Planet_Chunk_9_1
+    4300000: Planet_Chunk_0_0
+    4300002: Planet_Chunk_0_1
+    4300004: Planet_Chunk_1_0
+    4300006: Planet_Chunk_1_1
+    4300008: Planet_Chunk_2_0
+    4300010: Planet_Chunk_2_1
+    4300012: Planet_Chunk_3_0
+    4300014: Planet_Chunk_3_1
+    4300016: Planet_Chunk_4_0
+    4300018: Planet_Chunk_4_1
+    4300020: Planet_Chunk_5_0
+    4300022: Planet_Chunk_5_1
+    4300024: Planet_Chunk_6_0
+    4300026: Planet_Chunk_6_1
+    4300028: Planet_Chunk_7_0
+    4300030: Planet_Chunk_7_1
+    4300032: Planet_Chunk_8_0
+    4300034: Planet_Chunk_8_1
+    4300036: Planet_Chunk_9_0
+    4300038: Planet_Chunk_9_1
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
