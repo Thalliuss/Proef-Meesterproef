@@ -31,7 +31,8 @@ public class LoadingscreenManager : MonoBehaviour
     }
     private bool _isLoading = false;
 
-    private string _levelToLoad;
+    [SerializeField] private bool _loadOnStart;
+    [SerializeField] private string _levelToLoad;
 
     private void Awake()
     {
@@ -43,10 +44,14 @@ public class LoadingscreenManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
+    private void Start()
+    {
+        if (_loadOnStart) LoadScene(_levelToLoad);
+    }
+
     public void LoadScene(string p_input)
     {
-        _levelToLoad = p_input;
-        SceneManager.LoadScene(_levelToLoad);
+        SceneManager.LoadScene(p_input);
     }
 
     public void OpenLoadingscreen(string p_text)

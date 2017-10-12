@@ -25,14 +25,14 @@ namespace DataManagement
             {
                 t_data[i] = t_data[i].Replace(t_path, "");
 
-                if (t_data[i].Contains(DataManager.Instance.DataReferences.initialID))
+                if (t_data[i].Contains(DataManager.Instance.IntitialID))
                 {
                     saveData.Add(t_data[i]);
 
-                    if (t_data[i] != DataManager.Instance.DataReferences.initialID)
+                    if (t_data[i] != DataManager.Instance.IntitialID)
                         load.options.Add(new Dropdown.OptionData(t_data[i]));
                     
-                    else load.options.Add(new Dropdown.OptionData(DataManager.Instance.DataReferences.initialID));
+                    else load.options.Add(new Dropdown.OptionData(DataManager.Instance.IntitialID));
                 }
             }
         }

@@ -29,7 +29,7 @@ public class GenerationManager : MonoBehaviour
     [SerializeField]
     private List<Transform> _generationLocations;
 
-    private DataManager _dataManager;
+    private SceneManger _sceneManager;
     private DataReferences _dataReferences;
 
     public GameObject Tree
@@ -57,6 +57,33 @@ public class GenerationManager : MonoBehaviour
             _amount = value;
         }
     }
+
+    public List<GameObject> Buildings
+    {
+        get
+        {
+            return _buildings;
+        }
+
+        set
+        {
+            _buildings = value;
+        }
+    }
+
+    public List<GameObject> Trees
+    {
+        get
+        {
+            return _trees;
+        }
+
+        set
+        {
+            _trees = value;
+        }
+    }
+
     [SerializeField]
     private int _amount;
 
@@ -67,7 +94,9 @@ public class GenerationManager : MonoBehaviour
     [SerializeField]
     private Player _player;
 
+    [SerializeField]
     private List<GameObject> _trees = new List<GameObject>();
+    [SerializeField]
     private List<GameObject> _buildings = new List<GameObject>();
 
     private void Awake()
@@ -76,15 +105,19 @@ public class GenerationManager : MonoBehaviour
             Destroy(gameObject);
 
         _instance = this;
-
-        _dataManager = DataManager.Instance;
-        _dataReferences = _dataManager.DataReferences;
-
-        int progress = 100 * 0  / Amount;
     }
 
     private void Start()
     {
+        _sceneManager = SceneManger.Instance;
+        _dataReferences = _sceneManager.DataReferences;
+
+        Init();
+    }
+
+    public void Init()
+    {
+        ClearExistingObjects();
         StartCoroutine(PlaceExistingObjects());
 
         if (_dataReferences.SaveData.ids.Count > 0) return;
@@ -102,14 +135,14 @@ public class GenerationManager : MonoBehaviour
     {
         LoadingscreenManager t_loadingscreenManager = LoadingscreenManager.Instance;
         UIManager t_uiManager = UIManager.Instance;
-        t_loadingscreenManager.OpenLoadingscreen("Generating World.");
+        if (t_loadingscreenManager != null) t_loadingscreenManager.OpenLoadingscreen("Generating World.");
 
-        for (uint i = 0; i < Amount; i++)
+        for (uint i = 0; i < _amount; i++)
         {
-            if (i % (Amount / 50) == 0 && i != 0)
+            if (i % (_amount / 50) == 0 && i != 0)
                 yield return new WaitForSecondsRealtime(0.01f);
 
-            t_uiManager.LoadingBar.value = t_uiManager.LoadingBar.maxValue * i / Amount;
+            if (t_loadingscreenManager != null) t_uiManager.LoadingBar.value = t_uiManager.LoadingBar.maxValue * i / _amount;
 
             GameObject t_tree = _tree;
             Vector2 t_spawnPosV2 = UnityEngine.Random.insideUnitCircle * _radius;
@@ -125,10 +158,10 @@ public class GenerationManager : MonoBehaviour
             {
                 Vector3 t_finalSpawnPos = t_hit.point;
                 if (!t_hit.collider.CompareTag("Tower"))
-                    Instantiate(t_tree, t_finalSpawnPos, Quaternion.identity);
+                    _trees.Add(Instantiate(t_tree, t_finalSpawnPos, Quaternion.identity));
             }
         }
-        t_loadingscreenManager.CloseLoadingscreen();
+        if (t_loadingscreenManager != null) t_loadingscreenManager.CloseLoadingscreen();
         yield return null;
     }
 
@@ -149,7 +182,7 @@ public class GenerationManager : MonoBehaviour
                 t_uiManager.LoadingBar.value = t_uiManager.LoadingBar.maxValue * i / t_treeInfoArray.Trees.Count;
 
                 GameObject t_obj = Instantiate(_tree, t_treeInfoArray.Trees[i].Position, t_treeInfoArray.Trees[i].Rotation);
-                _trees.Add(t_obj);
+                Trees.Add(t_obj);
 
                 if (i % (t_treeInfoArray.Trees.Count / 50) == 0 && i != 0)
                     yield return new WaitForSecondsRealtime(0.01f);
@@ -166,18 +199,30 @@ public class GenerationManager : MonoBehaviour
                 t_uiManager.LoadingBar.value = t_uiManager.LoadingBar.maxValue * i / t_buildingInfoArray.Buildings.Count;
 
                 GameObject t_obj = Instantiate(_player.prefab, t_buildingInfoArray.Buildings[i].Position, t_buildingInfoArray.Buildings[i].Rotation);
-                _buildings.Add(t_obj);
+                Buildings.Add(t_obj);
                 yield return new WaitForSecondsRealtime(0.01f);
             }
             t_uiManager.LoadingBar.value = 0;
         }
-        t_loadingscreenManager.CloseLoadingscreen();
+        if (t_loadingscreenManager != null) t_loadingscreenManager.CloseLoadingscreen();
         yield return null;
     }
 
-    public void ClearExistingObjects()
+    private void ClearExistingObjects()
     {
+        for(int i = 0; i < Trees.Count; i++) 
+        {
+            if (Trees.Count != 0)
+                Destroy(Trees[i].gameObject);
+        }
+        for (int i = 0; i < Buildings.Count; i++)
+        {
+            if (Buildings.Count != 0)
+                Destroy(Buildings[i].gameObject);
+        }
 
+        Buildings.Clear();
+        Trees.Clear();
     }
 }
 

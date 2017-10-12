@@ -19,9 +19,6 @@ public class PlayerController : MonoBehaviour
 
     private bool _clampVerticalRotation = true;
     private bool _grounded = false;
-	private bool _cursorIsLocked = true;
-    private bool _scrollUp = false;
-    private bool _scrollDown = false;
 
     private void Start()
     {

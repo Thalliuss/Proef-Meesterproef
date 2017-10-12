@@ -67,7 +67,7 @@ public class UIManager : MonoBehaviour
     {
         if (p_input)
         {
-            if (SceneManager.GetActiveScene().buildIndex != 0)
+            if (SceneManager.GetActiveScene().buildIndex != 1)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;

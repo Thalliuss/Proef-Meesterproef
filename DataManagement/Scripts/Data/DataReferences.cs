@@ -44,8 +44,6 @@ namespace DataManagement
         public static byte[] key = new byte[8] { 14, 43, 26, 54, 78, 107, 31, 65 };
         public static byte[] iv = new byte[8] { 10, 28, 20, 35, 88, 11, 7, 107 };
 
-        [HideInInspector] public string initialID;
-
         [Serializable]
         public class SavedElement
         {

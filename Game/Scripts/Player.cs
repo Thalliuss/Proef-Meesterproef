@@ -6,21 +6,14 @@ public class Player : MonoBehaviour
 {
     public GameObject prefab;
 
-    private DataManager _dataManager;
+    private SceneManger _sceneManager;
     private DataReferences _dataReferences;
-
-    private void Awake()
-    {
-        _dataManager = DataManager.Instance;
-        _dataReferences = _dataManager.DataReferences;
-    }
-
-    private void Start()
-    {
-    }
 
     private void Update()
     {
+        _sceneManager = SceneManger.Instance;
+        _dataReferences = _sceneManager.DataReferences;
+
         PlaceBuilding();
     }
 
@@ -36,13 +29,32 @@ public class Player : MonoBehaviour
             {
                 BuildingInfo t_buildingInfoArray = _dataReferences.FindElement<BuildingInfo>("BUILDING_DATA");
 
-                if (!t_hit.collider.CompareTag("Tower") && !UIManager.Instance.MenuOpened) {
-                    Instantiate(prefab, t_hit.point, Quaternion.identity);
+                if (!t_hit.collider.CompareTag("Tower")) {
 
-                    Building t_obj = new Building(t_hit.point, Quaternion.identity, prefab);
+                    if (UIManager.Instance != null && !UIManager.Instance.MenuOpened)
+                    {
+                        GenerationManager.Instance.Buildings.Add(Instantiate(prefab, t_hit.point, Quaternion.identity));
 
-                    t_buildingInfoArray.Buildings.Add(t_obj);
-                    t_buildingInfoArray.Save();
+                        Building t_obj = new Building(t_hit.point, Quaternion.identity, prefab);
+
+                        if (t_buildingInfoArray != null)
+                        {
+                            t_buildingInfoArray.Buildings.Add(t_obj);
+                            t_buildingInfoArray.Save();
+                        }
+                    }
+                    else if (UIManager.Instance == null)
+                    {
+                        GenerationManager.Instance.Buildings.Add(Instantiate(prefab, t_hit.point, Quaternion.identity));
+
+                        Building t_obj = new Building(t_hit.point, Quaternion.identity, prefab);
+
+                        if (t_buildingInfoArray != null)
+                        {
+                            t_buildingInfoArray.Buildings.Add(t_obj);
+                            t_buildingInfoArray.Save();
+                        }
+                    }
                 }
             }
         }

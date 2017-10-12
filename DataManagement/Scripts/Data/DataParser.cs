@@ -31,7 +31,8 @@ namespace DataManagement
 
         public static void SaveJSON(string p_name, string p_info)
         {
-            string t_path = Application.persistentDataPath + "/" + DataManager.Instance.DataReferences.ID + "/" + p_name + ".json";
+            if (DataManager.Instance == null) return;
+            string t_path = Application.persistentDataPath + "/" + DataManager.Instance.SaveID + "/" + SceneManger.Instance.DataReferences.ID + "/" + p_name + ".json";
             if (!File.Exists(t_path)) File.Delete(t_path);
 
             using (FileStream fs = new FileStream(t_path, FileMode.Create))

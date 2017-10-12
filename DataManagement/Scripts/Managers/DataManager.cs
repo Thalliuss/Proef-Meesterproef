@@ -3,8 +3,8 @@ using UnityEditor;
 #endif
 using UnityEngine;
 
-using System;
 using System.IO;
+using System;
 
 namespace DataManagement
 {
@@ -24,21 +24,40 @@ namespace DataManagement
             }
         }
 
+        public string SaveID
+        {
+            get
+            {
+                return _saveID;
+            }
+
+            set
+            {
+                _saveID = value;
+            }
+        }
+        [SerializeField]
+        private string _saveID;
+
+        public string IntitialID
+        {
+            get
+            {
+                return _intitialID;
+            }
+
+            set
+            {
+                _intitialID = value;
+            }
+        }
+        private string _intitialID;
+
         [Header("Enable/Disable Encryption.")]
         public bool encrypt;
 
         [Header("Enable/Disable Multiple Save Files."), SerializeField]
         private bool multipleSaves;
-
-        public DataReferences DataReferences
-        {
-            get
-            {
-                return _dataReferences;
-            }
-        }
-        [Header("Data."), SerializeField]
-        private DataReferences _dataReferences;
 
         public SaveReferences SaveReferences
         {
@@ -52,9 +71,9 @@ namespace DataManagement
         private void Awake()
         {
             DontDestroyOnLoad(this);
-            _dataReferences.initialID = _dataReferences.ID;
+            _intitialID = _saveID;
 
-            string t_path = Application.persistentDataPath + "/" + _dataReferences.ID + "/";
+            string t_path = Application.persistentDataPath + "/" + _saveID + "/";
             if (!Directory.Exists(t_path))
                 Directory.CreateDirectory(t_path);
 
@@ -62,8 +81,6 @@ namespace DataManagement
                 Destroy(gameObject);
 
             _instance = this;
-
-            Build();
 
             if (!multipleSaves)
             {
@@ -78,19 +95,11 @@ namespace DataManagement
 
         private void Build()
         {
-            DataBuilder.BuildDataReferences(); 
+            SceneManger t_sceneManager = SceneManger.Instance;
 
-            DataBuilder.BuildElementsOfType<TreeInfo>(_dataReferences.SaveData);
-            DataBuilder.BuildElementsOfType<BuildingInfo>(_dataReferences.SaveData);
-
-        }
-
-        private void OnDestroy()
-        {
-            _dataReferences.SaveData.ids.Clear();
-            _dataReferences.SaveData.info.Clear();
-            _dataReferences.SaveData.types.Clear();
-            _dataReferences.ID = _dataReferences.initialID;
+            DataBuilder.BuildDataReferences();
+            DataBuilder.BuildElementsOfType<TreeInfo>(t_sceneManager.DataReferences.SaveData);
+            DataBuilder.BuildElementsOfType<BuildingInfo>(t_sceneManager.DataReferences.SaveData);
         }
 
         [ContextMenu("Manual New Save.")]
@@ -105,35 +114,42 @@ namespace DataManagement
                 t_time = t_time.Replace(':', '-');
 
                 string _path = Application.persistentDataPath + "/";
-                if (Directory.Exists(_path + _dataReferences.initialID + "/"))
+                if (Directory.Exists(_path + _intitialID + "/"))
                 {
-                    Directory.CreateDirectory(_path + _dataReferences.initialID + "_" + t_time);
+                    Directory.CreateDirectory(_path + _intitialID + "_" + t_time);
 
-                    for (uint i = 0; i < Directory.GetFiles(_path + _dataReferences.ID).Length; i++)
-                        File.Copy(Directory.GetFiles(_path + _dataReferences.ID)[i], Directory.GetFiles(_path + _dataReferences.ID)[i].Replace(_dataReferences.ID, _dataReferences.initialID + "_" + t_time));
+                    for (uint i = 0; i < Directory.GetDirectories(_path + _saveID).Length; i++)
+                    {
+                        string t_name = Directory.GetDirectories(_path + _saveID)[i];
+                        Directory.CreateDirectory(t_name.Replace(_saveID, _intitialID + "_" + t_time));
 
-                    Debug.Log("Saving Data to: " + _path + _dataReferences.initialID + "_" + t_time);
+                        for (uint a = 0; a < Directory.GetFiles(t_name).Length; a++)
+                            File.Copy(Directory.GetFiles(t_name)[a], Directory.GetFiles(t_name)[a].Replace(_saveID, _intitialID + "_" + t_time));
+                    }
+
+                    Debug.Log("Saving Data to: " + _path + _intitialID + "_" + t_time);
 
                     SaveReferences.Init();
-                    _dataReferences.ID = _dataReferences.initialID + "_" + t_time;
-                    _dataReferences.Save();
+                    _saveID = _intitialID + "_" + t_time;
                 }
             }
         }
-        [ContextMenu("Manual Override.")]
-        public void OverrideSave() { _dataReferences.Save(); }
 
         public void Load()
         {
             if (multipleSaves)
             {
-                _dataReferences.ID = SaveReferences.saveData[SaveReferences.load.value];
+                _saveID = SaveReferences.saveData[SaveReferences.load.value];
 
-                _dataReferences.SaveData.ids.Clear();
-                _dataReferences.SaveData.info.Clear();
-                _dataReferences.SaveData.types.Clear();
+                GenerationManager t_generationManager = GenerationManager.Instance;
+                SceneManger t_sceneManager = SceneManger.Instance;
 
-                Build();
+                if (t_sceneManager != null)
+                {
+                    t_sceneManager.ClearAllData();
+                    Build();
+                }
+                if (t_generationManager != null) t_generationManager.Init();
             }
         }
 
@@ -144,7 +160,7 @@ namespace DataManagement
             string[] t_data = Directory.GetDirectories(t_path);
             for (uint i = 0; i < t_data.Length; i++)
             {
-                if (t_data[i].Contains(_dataReferences.ID))
+                if (t_data[i].Contains(_saveID))
                 {
                     #if UNITY_EDITOR
                     if (Directory.Exists(t_data[i]))

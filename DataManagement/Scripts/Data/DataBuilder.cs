@@ -21,13 +21,13 @@ namespace DataManagement
 
         public static void BuildDataReferences()
         {
-            DataManager t_dataManager = DataManager.Instance;
-            string t_path = Application.persistentDataPath + "/" + t_dataManager.DataReferences.ID + "/" + t_dataManager.DataReferences.ID + ".json";
+            SceneManger t_sceneManager = SceneManger.Instance;
+            string t_path = Application.persistentDataPath + "/" + DataManager.Instance.SaveID + "/" + t_sceneManager.DataReferences.ID + "/" + t_sceneManager.DataReferences.ID + ".json";
 
             if (File.Exists(t_path))
             {
-                JsonUtility.FromJsonOverwrite(Decrypt(File.ReadAllText(t_path)), t_dataManager.DataReferences);
-                Debug.Log("Building Data from: " + Application.persistentDataPath + "/" + t_dataManager.DataReferences.ID);
+                JsonUtility.FromJsonOverwrite(Decrypt(File.ReadAllText(t_path)), t_sceneManager.DataReferences);
+                Debug.Log("Building Data from: " + t_path);
             }
         }
 
@@ -46,7 +46,7 @@ namespace DataManagement
         public static void BuildElementOfType<T>(DataReferences.SavedElement p_saveData, int p_index) where T : DataElement
         {
             string t_id = p_saveData.ids[p_index].ToString();
-            string t_path = Application.persistentDataPath + "/" + DataManager.Instance.DataReferences.ID + "/" + t_id + ".json";
+            string t_path = Application.persistentDataPath + "/" + DataManager.Instance.SaveID + "/" + SceneManger.Instance.DataReferences.ID + "/" + t_id + ".json";
 
             if (File.Exists(t_path))
             {
