@@ -8,7 +8,10 @@ namespace DataManagement
 {
     public abstract class Constructor<T> : ScriptableObject
     {
-        public Constructor(T id) { }
+        public Constructor(T id)
+        {
+
+        }
     }
 
     public class DataElement : Constructor<string>
@@ -48,41 +51,47 @@ namespace DataManagement
             _id = ID;
         }
 
-        public void AddElement<T>(DataElement p_element) where T : DataElement
+        public void AddElement<T>(string p_ID) where T : DataElement
         {
             if (DataManager.Instance == null) return;
 
             for (int i = 0; i < _saveData.ids.Count; i++)
-                if (p_element.ID == _saveData.ids[i]) return;
+                if (p_ID == _saveData.ids[i]) return;
 
-            T t_info = (T)DataParser.CreateAsset<T>(p_element.ID);
+            T t_info = (T)DataParser.CreateAsset<T>(p_ID);
+            t_info.ID = p_ID;
 
-            DataParser.SaveJSON(p_element.ID, JsonUtility.ToJson(p_element, true));
-            JsonUtility.FromJsonOverwrite(DataBuilder.Decrypt(File.ReadAllText(Application.persistentDataPath + "/" + DataManager.Instance.SaveID + "/" + SceneManger.Instance.DataReferences.ID + "/" + p_element.ID + ".json")), t_info);
+            DataParser.SaveJSON(p_ID, JsonUtility.ToJson(t_info, true));
+            JsonUtility.FromJsonOverwrite(DataBuilder.Decrypt(File.ReadAllText(Application.persistentDataPath + "/" + DataManager.Instance.ID + "/" + SceneManager.Instance.DataReferences.ID + "/" + p_ID + ".json")), t_info);
 
-            _saveData.ids.Add(p_element.ID);
+            _saveData.ids.Add(p_ID);
             _saveData.info.Add(t_info);
             _saveData.types.Add(t_info.GetType().ToString());
 
             Save();
         }
 
-        public void ReplaceElement<T>(DataElement p_element, int p_index) where T : DataElement
+        public void ReplaceElement<T>(string p_ID, int p_index) where T : DataElement
         {
+            if (DataManager.Instance == null) return;
+
+            #pragma warning disable CS0162 // Unreachable code detected
             for (int i = 0; i < _saveData.ids.Count; i++)
+            #pragma warning restore CS0162 // Unreachable code detected
             {
-                if (p_element.ID == _saveData.ids[p_index]) break;
+                if (p_ID == _saveData.ids[p_index]) break;
                 else throw new ArgumentException("Argument does not exists.");
             }
+             
+            T t_info = (T)DataParser.CreateAsset<T>(p_ID);
+            t_info.ID = p_ID;
 
-            T t_info = (T)DataParser.CreateAsset<T>(p_element.ID);
+            File.Delete(Application.persistentDataPath + "/" + DataManager.Instance.ID + "/" + SceneManager.Instance.DataReferences.ID + "/" + p_ID + ".json");
 
-            File.Delete(Application.persistentDataPath + "/" + DataManager.Instance.SaveID + "/" + SceneManger.Instance.DataReferences.ID + "/" + p_element.ID + ".json");
+            DataParser.SaveJSON(p_ID, JsonUtility.ToJson(t_info, true));
+            JsonUtility.FromJsonOverwrite(DataBuilder.Decrypt(File.ReadAllText(Application.persistentDataPath + "/" + DataManager.Instance.ID + "/" + SceneManager.Instance.DataReferences.ID + "/" + p_ID + ".json")), t_info as T);
 
-            DataParser.SaveJSON(p_element.ID, JsonUtility.ToJson(p_element, true));
-            JsonUtility.FromJsonOverwrite(DataBuilder.Decrypt(File.ReadAllText(Application.persistentDataPath + "/" + DataManager.Instance.SaveID + "/" + SceneManger.Instance.DataReferences.ID + "/" + p_element.ID + ".json")), t_info as T);
-
-            _saveData.ids[p_index] = p_element.ID;
+            _saveData.ids[p_index] = p_ID;
             _saveData.info[p_index] = t_info;
             _saveData.types[p_index] = t_info.GetType().ToString();
 
@@ -101,7 +110,7 @@ namespace DataManagement
                     _saveData.ids.Remove(_saveData.ids[i]);
                     _saveData.types.Remove(_saveData.types[i]);
 
-                    File.Delete(Application.persistentDataPath + "/" + DataManager.Instance.SaveID + "/" + SceneManger.Instance.DataReferences.ID + "/" + t_id + ".json");
+                    File.Delete(Application.persistentDataPath + "/" + DataManager.Instance.ID + "/" + SceneManager.Instance.DataReferences.ID + "/" + t_id + ".json");
                     Save();
                 }
             }
@@ -158,8 +167,8 @@ namespace DataManagement
         public void Save()
         {
             DataParser.SaveJSON(_id.ToString(), JsonUtility.ToJson(this, true));
-            JsonUtility.FromJsonOverwrite(DataBuilder.Decrypt(File.ReadAllText(Application.persistentDataPath + "/" + DataManager.Instance.SaveID + "/" + SceneManger.Instance.DataReferences.ID + "/" + _id.ToString() + ".json")), this);
-            Debug.Log("Saving Data to: " + Application.persistentDataPath + "/" + DataManager.Instance.SaveID + "/" + SceneManger.Instance.DataReferences.ID);
+            JsonUtility.FromJsonOverwrite(DataBuilder.Decrypt(File.ReadAllText(Application.persistentDataPath + "/" + DataManager.Instance.ID + "/" + SceneManager.Instance.DataReferences.ID + "/" + _id.ToString() + ".json")), this);
+            Debug.Log("Saving Data to: " + Application.persistentDataPath + "/" + DataManager.Instance.ID + "/" + SceneManager.Instance.DataReferences.ID);
         }
 
         public void Destroy()

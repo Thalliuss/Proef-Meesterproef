@@ -8,9 +8,9 @@ public class MassPoint : MonoBehaviour
         if (_sun != null) transform.RotateAround(_sun.position, Vector3.up, 5f * Time.deltaTime);
         transform.Rotate(0, .2f, .2f);
     }*/
-
-    public void Attract(Transform p_body, float p_gravity)
-    {
+     
+    public void Attract(Transform p_body, float p_gravity, float _gravitationalField)
+    { 
         Vector3 t_bodyUp = p_body.up;
         Vector3 t_gravityUp = (p_body.position - transform.position);
         t_gravityUp.Normalize();

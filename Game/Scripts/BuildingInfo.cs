@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
 public class BuildingInfo : DataElement
 {
     public List<Building> Buildings

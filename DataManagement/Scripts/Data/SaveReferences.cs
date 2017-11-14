@@ -25,14 +25,14 @@ namespace DataManagement
             {
                 t_data[i] = t_data[i].Replace(t_path, "");
 
-                if (t_data[i].Contains(DataManager.Instance.IntitialID))
+                if (!t_data[i].Contains("Unity") && !t_data[i].Contains("temp"))
                 {
                     saveData.Add(t_data[i]);
 
-                    if (t_data[i] != DataManager.Instance.IntitialID)
+                    if (t_data[i] != DataManager.Instance.ID)
                         load.options.Add(new Dropdown.OptionData(t_data[i]));
                     
-                    else load.options.Add(new Dropdown.OptionData(DataManager.Instance.IntitialID));
+                    else load.options.Add(new Dropdown.OptionData(DataManager.Instance.ID));
                 }
             }
         }

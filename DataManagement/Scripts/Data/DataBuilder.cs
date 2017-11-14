@@ -21,8 +21,8 @@ namespace DataManagement
 
         public static void BuildDataReferences()
         {
-            SceneManger t_sceneManager = SceneManger.Instance;
-            string t_path = Application.persistentDataPath + "/" + DataManager.Instance.SaveID + "/" + t_sceneManager.DataReferences.ID + "/" + t_sceneManager.DataReferences.ID + ".json";
+            SceneManager t_sceneManager = SceneManager.Instance;
+            string t_path = Application.persistentDataPath + "/" + DataManager.Instance.ID + "/" + t_sceneManager.DataReferences.ID + "/" + t_sceneManager.DataReferences.ID + ".json";
 
             if (File.Exists(t_path))
             {
@@ -46,7 +46,7 @@ namespace DataManagement
         public static void BuildElementOfType<T>(DataReferences.SavedElement p_saveData, int p_index) where T : DataElement
         {
             string t_id = p_saveData.ids[p_index].ToString();
-            string t_path = Application.persistentDataPath + "/" + DataManager.Instance.SaveID + "/" + SceneManger.Instance.DataReferences.ID + "/" + t_id + ".json";
+            string t_path = Application.persistentDataPath + "/" + DataManager.Instance.ID + "/" + SceneManager.Instance.DataReferences.ID + "/" + t_id + ".json";
 
             if (File.Exists(t_path))
             {
