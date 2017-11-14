@@ -1,8 +1,4 @@
 ﻿using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
 using System.IO;
 using System.Text;
 using System.Security.Cryptography;
@@ -32,7 +28,7 @@ namespace DataManagement
         public static void SaveJSON(string p_name, string p_info)
         {
             if (DataManager.Instance == null) return;
-            string t_path = Application.persistentDataPath + "/" + DataManager.Instance.SaveID + "/" + SceneManger.Instance.DataReferences.ID + "/" + p_name + ".json";
+            string t_path = Application.persistentDataPath + "/" + DataManager.Instance.ID + "/" + SceneManager.Instance.DataReferences.ID + "/" + p_name + ".json";
             if (!File.Exists(t_path)) File.Delete(t_path);
 
             using (FileStream fs = new FileStream(t_path, FileMode.Create))

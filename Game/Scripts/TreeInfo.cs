@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
 public class TreeInfo : DataElement
 {
     public List<Tree> Trees

@@ -36,7 +36,7 @@ public class GravityHandler : MonoBehaviour
 
         if (massPoint != null) {
             transform.parent = massPoint.transform;
-            massPoint.Attract(transform, _gravitationalForce);
+            massPoint.Attract(transform, _gravitationalForce, _gravitationalField);
         } else t_rigidbody.velocity = Vector3.zero;
     }
 }

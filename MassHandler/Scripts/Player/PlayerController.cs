@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerController : MonoBehaviour
@@ -93,5 +94,41 @@ public class PlayerController : MonoBehaviour
 
         t_ypos -= Input.mouseScrollDelta.y * _scrollSpeed;
         _camera.transform.localPosition = new Vector3(t_pos.x, Mathf.Clamp(t_ypos, 5, 100), t_pos.z);
+
+        HeightAjuster();
+    }
+
+    private void HeightAjuster()
+    {
+        float t_distance = 100f;
+
+        RaycastHit t_hitZoom;
+        Ray t_rayFront = new Ray(_camera.transform.position, transform.forward);
+        if (Physics.Raycast(t_rayFront, out t_hitZoom, t_distance, _groundedMask))
+        {
+            _camera.transform.localPosition = Vector3.Lerp(_camera.transform.localPosition,
+            new Vector3(_camera.transform.localPosition.x, _camera.transform.localPosition.y + .5f, _camera.transform.localPosition.z), 100f * Time.deltaTime);
+        }
+
+        Ray t_rayBack = new Ray(_camera.transform.position, -transform.forward);
+        if (Physics.Raycast(t_rayBack, out t_hitZoom, t_distance, _groundedMask))
+        {
+            _camera.transform.localPosition = Vector3.Lerp(_camera.transform.localPosition,
+            new Vector3(_camera.transform.localPosition.x, _camera.transform.localPosition.y + .5f, _camera.transform.localPosition.z), 100f * Time.deltaTime);
+        }
+
+        Ray t_rayLeft = new Ray(_camera.transform.position, -transform.right);
+        if (Physics.Raycast(t_rayLeft, out t_hitZoom, t_distance, _groundedMask))
+        {
+            _camera.transform.localPosition = Vector3.Lerp(_camera.transform.localPosition,
+            new Vector3(_camera.transform.localPosition.x, _camera.transform.localPosition.y + .5f, _camera.transform.localPosition.z), 100f * Time.deltaTime);
+        }
+
+        Ray t_rayRight = new Ray(_camera.transform.position, transform.right);
+        if (Physics.Raycast(t_rayRight, out t_hitZoom, t_distance, _groundedMask))
+        {
+            _camera.transform.localPosition = Vector3.Lerp(_camera.transform.localPosition,
+            new Vector3(_camera.transform.localPosition.x, _camera.transform.localPosition.y + .5f, _camera.transform.localPosition.z), 100f * Time.deltaTime);
+        }
     }
 }

@@ -60,9 +60,6 @@ public class LoadingscreenManager : MonoBehaviour
 
         t_uiManager.OpenLoading(p_text);
         _isLoading = true;
-
-        if (SceneManager.GetActiveScene().buildIndex == 1) t_uiManager.OpenHUD();
-        else t_uiManager.CloseHUD();
     }
 
     public void CloseLoadingscreen()
